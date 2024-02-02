@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Churn Predictor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            overflow: auto;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        h1 {
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 1px;
+            text-overflow: '';
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form action="{{ url_for('predict_datapoint')}}" method="post" onsubmit="submitForm()">
+            <h1>Bank Churn Predictor</h1>
+
+            <label for="creditScore">Credit Score:</label>
+            <input type="number" id="creditScore" name="CreditScore" required>
+
+            <label for="geography">Geography:</label>
+            <select id="geography" name="Geography" required>
+                <option value="France">France</option>
+                <option value="Spain">Spain</option>
+                <option value="Germany">Germany</option>
+            </select>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="Gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <label for="age">Age:</label>
+            <select id="age" name="Age" required>
+            </select>
+
+            <label for="tenure">Tenure:</label>
+            <input type="number" id="tenure" name="Tenure" required>
+
+            <label for="balance">Balance:</label>
+            <input type="number" id="balance" name="Balance" required>
+
+            <label for="hasCrCard">Has Credit Card:</label>
+            <select id="hasCrCard" name="HasCrCard" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="isActiveMember">Is Active Member:</label>
+            <select id="isActiveMember" name="IsActiveMember" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="estimatedSalary">Estimated Salary:</label>
+            <input type="number" id="estimatedSalary" name="EstimatedSalary" required>
+
+            <button type="submit">Get Prediction</button>
+        </form>
+        <h2>THE prediction is {{results}}</h2>
+    </div>
+
+    <script>
+        // JavaScript code to populate the age dropdown
+        const ageDropdown = document.getElementById('age');
+
+        for (let i = 1; i <= 100; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.text = i;
+            ageDropdown.add(option);
+        }
+
+        function submitForm() {
+            // Convert 'Yes' to 1 and 'No' to 0 for 'HasCrCard' and 'IsActiveMember'
+            const hasCrCardValue = document.getElementById('hasCrCard').value === 'Yes' ? 1 : 0;
+            const isActiveMemberValue = document.getElementById('isActiveMember').value === 'Yes' ? 1 : 0;
+
+            // Set converted values back to the form fields
+            document.getElementById('hasCrCard').value = hasCrCardValue;
+            document.getElementById('isActiveMember').value = isActiveMemberValue;
+        }
+    </script>
+</body>
+
+</html>
